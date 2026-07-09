@@ -1,13 +1,10 @@
-====================================================
 
 const BASE_URL = 'https://collectionapi.metmuseum.org/public/collection/v1';
 
 /**
- * Hace un fetch con timeout usando AbortController.
- * Si la petición tarda más de `timeoutMs` ms, se cancela.
  * @param {string} url
- * @param {number} timeoutMs - tiempo máximo en milisegundos (default: 10s)
- * @returns {Promise<any>} - el JSON de la respuesta
+ * @param {number} timeoutMs 
+ * @returns {Promise<any>} 
  */
 async function fetchWithTimeout(url, timeoutMs = 10000) {
     const controller = new AbortController();
