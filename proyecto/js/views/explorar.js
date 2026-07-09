@@ -33,19 +33,19 @@ function renderExplore(container, departmentId) {
         galleryContainer.innerHTML = '';
         paginationEl.innerHTML = '';
 
-        var loading = document.createElement('loading-state');
+        let loading = document.createElement('loading-state');
         loading.setAttribute('count', '12');
         galleryContainer.appendChild(loading);
 
         try {
-            var result = await searchObjects({ q: 'true' });
+            let result = await searchObjects({ q: 'true' });
             allIds = result.objectIDs;
             totalResults = result.total;
 
             galleryContainer.innerHTML = '';
 
             if (totalResults === 0 || allIds.length === 0) {
-                var noResults = document.createElement('p');
+                let noResults = document.createElement('p');
                 noResults.className = 'no-results';
                 noResults.textContent = 'No se encontraron obras.';
                 galleryContainer.appendChild(noResults);
@@ -54,12 +54,12 @@ function renderExplore(container, departmentId) {
                 return;
             }
 
-            var startIdx = (currentPage - 1) * 12;
-            var pageIds = allIds.slice(startIdx, startIdx + 12);
+            let startIdx = (currentPage - 1) * 12;
+            let pageIds = allIds.slice(startIdx, startIdx + 12);
             currentObjects = await resolveIds(pageIds);
 
             if (currentObjects.length === 0) {
-                var noResults = document.createElement('p');
+                let noResults = document.createElement('p');
                 noResults.className = 'no-results';
                 noResults.textContent = 'No se pudieron cargar las obras de esta pagina.';
                 galleryContainer.appendChild(noResults);
@@ -68,13 +68,13 @@ function renderExplore(container, departmentId) {
                 return;
             }
 
-            var requestedCount = pageIds.length;
+            let requestedCount = pageIds.length;
             renderGallery(galleryContainer, currentObjects, requestedCount);
-            var totalPages = Math.ceil(allIds.length / 12);
+            let totalPages = Math.ceil(allIds.length / 12);
             updatePagination(paginationEl, totalPages, currentPage);
         } catch (error) {
             galleryContainer.innerHTML = '';
-            var errorState = document.createElement('error-state');
+            let errorState = document.createElement('error-state');
             errorState.setAttribute('message', 'Error al cargar las obras. Verifica tu conexion.');
             errorState.addEventListener('retry', performSearch);
             galleryContainer.appendChild(errorState);
@@ -152,9 +152,9 @@ function renderGallery(container, objects, requestedCount) {
 
     container.appendChild(grid);
 
-    var failedCount = requestedCount - objects.length;
+    let failedCount = requestedCount - objects.length;
     if (failedCount > 0) {
-        var note = document.createElement('p');
+        let note = document.createElement('p');
         note.className = 'explore-error-note';
         note.textContent = failedCount + ' obra(s) no pudieron cargarse.';
         container.appendChild(note);
