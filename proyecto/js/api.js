@@ -27,3 +27,22 @@ async function fetchWithTimeout(url, timeoutMs = 10000) {
         throw error;
     }
 }
+
+async function getDepartments() {
+    const data = await fetchWithTimeout(`${BASE_URL}/departments`);
+    return data.departments;
+}
+
+async function searchObjects(params) {
+    const queryString = Object.entries(params)
+        .filter(([, value]) => value !== null && value !== undefined && value !== '')
+        .map(([key, value]) => `${encodeURIComponent(key)}=${encodeURIComponent(value)}`)
+        .join('&');
+
+    const data = await fetchWithTimeout(`${BASE_URL}/search?${queryString}`);
+
+    return {
+        total: data.total || 0,
+        objectIDs: data.objectIDs || []
+    };
+}
