@@ -184,16 +184,6 @@ footer {
     padding: 0.8rem;
 }
 
-.explore-card-title {
-    font-size: 0.9rem;
-    color: #e0e0e0;
-    margin-bottom: 0.3rem;
-    display: -webkit-box;
-    -webkit-line-clamp: 2;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-}
-
 .explore-card-artist {
     font-size: 0.8rem;
     color: #c9a227;
