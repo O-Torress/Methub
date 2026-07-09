@@ -70,7 +70,7 @@ body {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
-  background-color: #0f0f1e;
+  background-color: #f5f5dc;
   color: #e0e0e0;
   font-family: 'Inter', sans-serif;
 }
@@ -91,6 +91,7 @@ footer {
 #logo:hover {
   transition: 1s;
   transform: scale(1.08);
+  
 }
 
 .loading-state-wrapper {
@@ -127,4 +128,178 @@ footer {
 @keyframes shimmer {
     0%   { background-position: 200% 0; }
     100% { background-position: -200% 0; }
+}
+
+.explore-layout {
+    padding: 1.5rem;
+    min-height: 70vh;
+}
+
+.explore-content {
+    width: 100%;
+}
+
+.explore-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 1.2rem;
+}
+
+.explore-card {
+    background: #1a1a2e;
+    border-radius: 10px;
+    overflow: hidden;
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.explore-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+}
+
+.explore-card-img {
+    width: 100%;
+    height: 200px;
+    background: #0f0f1e;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+
+.explore-card-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.explore-card-img--placeholder {
+    color: #555;
+    font-size: 0.85rem;
+    text-align: center;
+}
+
+.explore-card-info {
+    padding: 0.8rem;
+}
+
+.explore-card-title {
+    font-size: 0.9rem;
+    color: #e0e0e0;
+    margin-bottom: 0.3rem;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.explore-card-artist {
+    font-size: 0.8rem;
+    color: #c9a227;
+    margin-bottom: 0.3rem;
+}
+
+.explore-card-meta {
+    font-size: 0.75rem;
+    color: #666;
+}
+
+.no-results {
+    text-align: center;
+    padding: 3rem 1rem;
+    color: #888;
+    font-size: 1.1rem;
+}
+
+.explore-error-note {
+    text-align: center;
+    font-size: 0.8rem;
+    color: #e94560;
+    margin-top: 0.5rem;
+}
+
+.pagination {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    padding: 1.5rem 0;
+}
+
+.pagination-btn {
+    padding: 0.5rem 1.2rem;
+    border: 1px solid #c9a227;
+    border-radius: 6px;
+    background: transparent;
+    color: #c9a227;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.pagination-btn:hover:not(:disabled) {
+    background: #c9a227;
+    color: #1a1a2e;
+}
+
+.pagination-btn:disabled {
+    opacity: 0.3;
+    cursor: not-allowed;
+}
+
+.pagination-info {
+    color: #aaa;
+    font-size: 0.9rem;
+}
+
+.error-state-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 3rem 1rem;
+    text-align: center;
+}
+
+.error-state-icon {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background: #e94560;
+    color: #fff;
+    font-size: 1.5rem;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1rem;
+}
+
+.error-state-message {
+    color: #e0e0e0;
+    font-size: 1rem;
+    margin-bottom: 1rem;
+}
+
+.error-state-retry {
+    padding: 0.6rem 1.5rem;
+    border: 1px solid #c9a227;
+    border-radius: 6px;
+    background: transparent;
+    color: #c9a227;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.error-state-retry:hover {
+    background: #c9a227;
+    color: #1a1a2e;
+}
+
+@media (max-width: 768px) {
+    .explore-grid {
+        grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    }
 }

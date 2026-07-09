@@ -1,31 +1,32 @@
 class ErrorState extends HTMLElement {
     constructor() {
         super();
-        this.innerHTML = `
-            <div class="error-state-wrapper">
-                <div class="error-icon">⚠️</div>
-                <h3 class="error-title">¡Ups! Algo salió mal</h3>
-                <p class="error-message">No pudimos cargar la información en este momento.</p>
-                <button class="btn-retry">Intentar de nuevo</button>
-            </div>
-        `;
-    }
 
-    setup(message, onRetry) {
-        if (message) {
-            this.querySelector('.error-message').textContent = message;
-        }
+        const message = this.getAttribute('message') || 'Ocurrio un error al cargar los datos.';
+        const retryLabel = this.getAttribute('retry-label') || 'Reintentar';
 
-        const btn = this.querySelector('.btn-retry');
-        if (onRetry) {
-            btn.addEventListener('click', () => {
-                btn.textContent = 'Reintentando...';
-                btn.disabled = true;
-                onRetry();
-            });
-        } else {
-            btn.style.display = 'none';
-        }
+        const wrapper = document.createElement('div');
+        wrapper.className = 'error-state-wrapper';
+
+        const icon = document.createElement('div');
+        icon.className = 'error-state-icon';
+        icon.textContent = '!';
+
+        const msgEl = document.createElement('p');
+        msgEl.className = 'error-state-message';
+        msgEl.textContent = message;
+
+        const btn = document.createElement('button');
+        btn.className = 'error-state-retry';
+        btn.textContent = retryLabel;
+        btn.addEventListener('click', () => {
+            this.dispatchEvent(new CustomEvent('retry', { bubbles: true }));
+        });
+
+        wrapper.appendChild(icon);
+        wrapper.appendChild(msgEl);
+        wrapper.appendChild(btn);
+        this.appendChild(wrapper);
     }
 }
 
