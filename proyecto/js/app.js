@@ -1,10 +1,10 @@
 const routes = {
     '#home': renderHome,
-    '#explore': renderExplore,
-    '#detail': renderDetail,         
-    '#departments': renderDepartments,
-    '#artist': renderArtist,         
-    '#compare': renderCompare
+    '#explorar': renderExplore,
+    '#detalle': renderDetail,         
+    '#departamentos': renderDepartments,
+    '#artista': renderArtist,         
+    '#comparar': renderCompare
 };
 
 function router() {
