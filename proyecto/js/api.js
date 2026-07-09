@@ -46,3 +46,16 @@ async function searchObjects(params) {
         objectIDs: data.objectIDs || []
     };
 }
+
+async function getObject(id) {
+    return await fetchWithTimeout(`${BASE_URL}/objects/${id}`);
+}
+
+async function resolveIds(ids) {
+    const promises = ids.map(id => getObject(id));
+    const results = await Promise.allSettled(promises);
+
+    return results
+        .filter(result => result.status === 'fulfilled')
+        .map(result => result.value);
+}
