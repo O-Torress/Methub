@@ -129,7 +129,6 @@ footer {
     100% { background-position: -200% 0; }
 }
 
-/* ── Error State ── */
 .error-state-wrapper {
     display: flex;
     flex-direction: column;
