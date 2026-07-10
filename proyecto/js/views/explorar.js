@@ -38,7 +38,12 @@ function renderExplore(container, departmentId) {
         galleryContainer.appendChild(loading);
 
         try {
-            let result = await searchObjects({ q: 'true' });
+            let params = { q: 'painting' };
+            if (departmentId) {
+                params.departmentId = departmentId;
+                params.q = 'painting';
+            }
+            let result = await searchObjects(params);
             allIds = result.objectIDs;
             totalResults = result.total;
 
