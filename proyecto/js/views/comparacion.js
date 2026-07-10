@@ -261,6 +261,94 @@ function mostrarObraEnPanel(obra, panelId, panel, mainContainer) {
 }
 
 function mostrarTablaComparativa(container) {
+    const tableSection = document.getElementById('compare-table-section');
+    if (!tableSection) return;
+
+    tableSection.style.display = 'block';
+    tableSection.innerHTML = '';
+
+    const obraA = compareState.panelA;
+    const obraB = compareState.panelB;
+
+    const title = document.createElement('h2');
+    title.className = 'table-title';
+    title.textContent = 'Comparación de Obras';
+    tableSection.appendChild(title);
+
+    const table = document.createElement('table');
+    table.className = 'compare-table';
+
+    const thead = document.createElement('thead');
+    const headerRow = document.createElement('tr');
+
+    ['Atributo', 'Obra A', 'Obra B'].forEach(text => {
+        const th = document.createElement('th');
+        th.textContent = text;
+        headerRow.appendChild(th);
+    });
+
+    thead.appendChild(headerRow);
+    table.appendChild(thead);
+
+    const campos = [
+        { label: 'Artista',          keyA: obraA.artistDisplayName, keyB: obraB.artistDisplayName },
+        { label: 'Año',              keyA: obraA.objectEndDate || obraA.objectBeginDate || null, keyB: obraB.objectEndDate || obraB.objectBeginDate || null },
+        { label: 'Departamento',     keyA: obraA.department,        keyB: obraB.department },
+        { label: 'Técnica',          keyA: obraA.medium,            keyB: obraB.medium },
+        { label: 'Clasificación',    keyA: obraA.classification,    keyB: obraB.classification },
+        { label: 'Cultura',          keyA: obraA.culture,           keyB: obraB.culture },
+        { label: '¿Obra destacada?', keyA: obraA.isHighlight ? 'Sí' : 'No', keyB: obraB.isHighlight ? 'Sí' : 'No' },
+        { label: '¿Dominio público?',keyA: obraA.isPublicDomain ? 'Sí' : 'No', keyB: obraB.isPublicDomain ? 'Sí' : 'No' }
+    ];
+
+    const tbody = document.createElement('tbody');
+
+    campos.forEach(campo => {
+        const row = document.createElement('tr');
+        const valA = campo.keyA || '—';
+        const valB = campo.keyB || '—';
+        const sonDiferentes = String(valA) !== String(valB);
+
+        if (sonDiferentes) {
+            row.classList.add('row-different');
+        }
+
+        const tdLabel = document.createElement('td');
+        tdLabel.className = 'td-label';
+        tdLabel.textContent = campo.label;
+
+        const tdA = document.createElement('td');
+        tdA.textContent = String(valA);
+
+        const tdB = document.createElement('td');
+        tdB.textContent = String(valB);
+
+        if (sonDiferentes) {
+            const icon = document.createElement('span');
+            icon.className = 'diff-icon';
+            icon.textContent = ' ≠';
+            tdLabel.appendChild(icon);
+        }
+
+        row.appendChild(tdLabel);
+        row.appendChild(tdA);
+        row.appendChild(tdB);
+        tbody.appendChild(row);
+    });
+
+    table.appendChild(tbody);
+    tableSection.appendChild(table);
+
+    const yearA = obraA.objectEndDate || obraA.objectBeginDate;
+    const yearB = obraB.objectEndDate || obraB.objectBeginDate;
+
+    if (yearA && yearB) {
+        const diffSection = document.createElement('p');
+        diffSection.className = 'year-diff';
+        const diff = Math.abs(parseInt(yearA) - parseInt(yearB));
+        diffSection.textContent = `Diferencia entre obras: ${diff} año${diff !== 1 ? 's' : ''}`;
+        tableSection.appendChild(diffSection);
+    }
 }
 
 function precargarObra(id, panelId, panel) {
