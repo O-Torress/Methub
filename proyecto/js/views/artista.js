@@ -1,3 +1,5 @@
+const ITEMS_PER_PAGE = 4;
+
 async function renderArtist(container, artistName) {
     if (!artistName) {
         container.innerHTML = '';
@@ -48,6 +50,65 @@ async function renderArtist(container, artistName) {
             container.appendChild(noData);
             return;
         }
+
+        loader.remove();
+
+        const gallery = document.createElement('div');
+        gallery.className = 'artist-gallery';
+        container.appendChild(gallery);
+
+        const paginationContainer = document.createElement('div');
+        paginationContainer.className = 'pagination-controls';
+        container.appendChild(paginationContainer);
+
+        const totalItems = objectIDs.length;
+        const totalPages = Math.ceil(totalItems / ITEMS_PER_PAGE);
+        let currentPage = 1;
+
+        async function loadPage(page) {
+            gallery.innerHTML = '';
+            
+            const miniLoader = document.createElement('loading-state');
+            miniLoader.setAttribute('count', '4');
+            gallery.appendChild(miniLoader);
+
+            const startIdx = (page - 1) * ITEMS_PER_PAGE;
+            const endIdx = startIdx + ITEMS_PER_PAGE;
+            const pageIds = objectIDs.slice(startIdx, endIdx);
+
+            try {
+                const obras = await resolveIds(pageIds);
+                miniLoader.remove();
+
+                if (obras.length === 0) {
+                    const noObras = document.createElement('p');
+                    noObras.textContent = 'No se pudieron cargar las obras de esta página.';
+                    gallery.appendChild(noObras);
+                    return;
+                }
+
+                if (page === 1 && obras[0]) {
+                    bio.textContent = `${obras[0].artistRole || 'Artista'} | Nacimiento/Muerte: ${obras[0].artistBiography || 'Información no disponible'}`;
+                }
+
+                obras.forEach(obra => {
+                    const card = crearArtworkCard(obra);
+                    gallery.appendChild(card);
+                });
+
+                renderPagination(paginationContainer, page, totalPages, (targetPage) => {
+                    currentPage = targetPage;
+                    loadPage(currentPage);
+                });
+            } catch (error) {
+                miniLoader.remove();
+                const errorEl = document.createElement('error-state');
+                gallery.appendChild(errorEl);
+                errorEl.setup('Error al cargar la página de obras.', () => loadPage(page));
+            }
+        }
+
+        await loadPage(currentPage);
     } catch (error) {
         loader.remove();
         const errorEl = document.createElement('error-state');
@@ -113,4 +174,28 @@ function crearArtworkCard(obra) {
     });
 
     return card;
+}
+
+function renderPagination(container, currentPage, totalPages, onPageChange) {
+    container.innerHTML = '';
+
+    const btnPrev = document.createElement('button');
+    btnPrev.className = 'btn-page';
+    btnPrev.textContent = '◀ Anterior';
+    btnPrev.disabled = currentPage === 1;
+    btnPrev.addEventListener('click', () => onPageChange(currentPage - 1));
+
+    const indicator = document.createElement('span');
+    indicator.className = 'page-indicator';
+    indicator.textContent = `Página ${currentPage} de ${totalPages}`;
+
+    const btnNext = document.createElement('button');
+    btnNext.className = 'btn-page';
+    btnNext.textContent = 'Siguiente ▶';
+    btnNext.disabled = currentPage === totalPages;
+    btnNext.addEventListener('click', () => onPageChange(currentPage + 1));
+
+    container.appendChild(btnPrev);
+    container.appendChild(indicator);
+    container.appendChild(btnNext);
 }
