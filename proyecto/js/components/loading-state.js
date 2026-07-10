@@ -1,6 +1,11 @@
 class LoadingState extends HTMLElement {
     constructor() {
         super();
+    }
+
+    connectedCallback() {
+        if (this._rendered) return;
+        this._rendered = true;
 
         const count = parseInt(this.getAttribute('count')) || 6;
 

@@ -1,8 +1,13 @@
 class ErrorState extends HTMLElement {
     constructor() {
         super();
+    }
 
-        const message = this.getAttribute('message') || 'Ocurrio un error al cargar los datos.';
+    connectedCallback() {
+        if (this._rendered) return;
+        this._rendered = true;
+
+        const message = this.getAttribute('message') || 'Ocurrió un error al cargar los datos.';
         const retryLabel = this.getAttribute('retry-label') || 'Reintentar';
 
         const wrapper = document.createElement('div');

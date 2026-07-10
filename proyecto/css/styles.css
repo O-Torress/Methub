@@ -60,7 +60,6 @@ header {
   background: #f4f0e8;
   text-decoration: none;
   flex-shrink: 0;
-  border: 2px solid #b8860b;
   transition: transform 0.4s ease, box-shadow 0.4s ease;
 }
 
@@ -71,7 +70,7 @@ header {
 
 #logo img {
   display: block;
-  filter: sepia(100%) hue-rotate(5deg) saturate(300%) brightness(85%);
+
 }
 
 .nav-links {
@@ -144,6 +143,12 @@ footer {
     0 0 0 6px #b8860b33;
   border-radius: 4px;
   background: #2c2318;
+}
+
+/* ===== CUSTOM ELEMENTS ===== */
+loading-state,
+error-state {
+  display: block;
 }
 
 /* ===== LOADING SKELETON ===== */
@@ -378,6 +383,170 @@ footer {
     0 12px 40px rgba(184, 134, 11, 0.3),
     0 0 0 3px #8b4513,
     0 0 0 8px rgba(184, 134, 11, 0.35);
+}
+
+/* ===== HOME SECTIONS (Stats + Featured) ===== */
+.home-section-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.8rem;
+  color: #3a2f27;
+  text-align: center;
+  margin-bottom: 1.5rem;
+  position: relative;
+}
+
+.home-section-title::after {
+  content: '';
+  display: block;
+  width: 60px;
+  height: 3px;
+  background: #b8860b;
+  margin: 0.5rem auto 0;
+  border-radius: 2px;
+}
+
+.home-stats-section {
+  margin-bottom: 3rem;
+}
+
+.home-stats-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.home-stat-card {
+  background: linear-gradient(145deg, #2c2318, #3d3028);
+  border: 2px solid #b8860b;
+  border-radius: 6px;
+  padding: 1.8rem 1rem;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  animation: fadeInUp 0.5s ease backwards;
+}
+
+.home-stat-icon {
+  font-size: 1.8rem;
+}
+
+.home-stat-value {
+  font-family: 'Playfair Display', serif;
+  font-size: 2rem;
+  font-weight: 700;
+  color: #d4a843;
+}
+
+.home-stat-label {
+  font-family: 'Lora', serif;
+  font-size: 0.9rem;
+  color: #c0b49a;
+}
+
+.home-featured-section {
+  margin-bottom: 2rem;
+}
+
+.home-featured-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 1.5rem;
+}
+
+.home-featured-card {
+  background: #2c2318;
+  border: 3px solid #b8860b;
+  border-radius: 4px;
+  overflow: hidden;
+  cursor: pointer;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  animation: fadeInUp 0.5s ease backwards;
+}
+
+.home-featured-card:hover {
+  transform: translateY(-6px);
+  box-shadow:
+    0 12px 32px rgba(184, 134, 11, 0.2),
+    0 0 24px rgba(184, 134, 11, 0.1);
+}
+
+.home-featured-img {
+  width: 100%;
+  height: 220px;
+  background: #1a1510;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  border-bottom: 2px solid #b8860b66;
+}
+
+.home-featured-img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.4s ease;
+}
+
+.home-featured-card:hover .home-featured-img img {
+  transform: scale(1.05);
+}
+
+.home-featured-info {
+  padding: 0.8rem;
+}
+
+.home-featured-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 0.95rem;
+  color: #f0e6d3;
+  margin-bottom: 0.3rem;
+  font-weight: 600;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.home-featured-artist {
+  font-size: 0.85rem;
+  color: #d4a843;
+  margin-bottom: 0.3rem;
+  font-family: 'Lora', serif;
+  font-style: italic;
+}
+
+.home-featured-meta {
+  font-size: 0.75rem;
+  color: #8b7355;
+  font-family: 'Lora', serif;
+}
+
+.home-error-container {
+  max-width: 600px;
+  margin: 2rem auto;
+}
+
+@media (max-width: 640px) {
+  .home-stats-grid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+  .home-featured-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 480px) {
+  .home-featured-grid {
+    grid-template-columns: 1fr;
+  }
 }
 
 /* ===== EXPLORE PAGE ===== */
@@ -1118,6 +1287,10 @@ footer {
   text-align: center;
   padding: 1rem 0;
   font-style: italic;
+}
+
+.panel-loading {
+  font-style: normal;
 }
 
 .panel-error {

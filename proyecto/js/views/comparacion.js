@@ -95,9 +95,9 @@ function mostrarBuscador(panel, panelId, mainContainer) {
 
 async function buscarEnPanel(query, resultsList, panelId, panel, mainContainer) {
     resultsList.innerHTML = '';
-    const miniLoader = document.createElement('p');
+    const miniLoader = document.createElement('loading-state');
+    miniLoader.setAttribute('count', '3');
     miniLoader.className = 'panel-loading';
-    miniLoader.textContent = 'Buscando obras…';
     resultsList.appendChild(miniLoader);
 
     try {
@@ -372,9 +372,9 @@ async function precargarObra(id, panelId, panel) {
     panel.innerHTML = '';
     panel.appendChild(label);
 
-    const loader = document.createElement('p');
+    const loader = document.createElement('loading-state');
+    loader.setAttribute('count', '1');
     loader.className = 'panel-loading';
-    loader.textContent = 'Cargando obra…';
     panel.appendChild(loader);
 
     try {
