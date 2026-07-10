@@ -28,6 +28,26 @@ class ErrorState extends HTMLElement {
         wrapper.appendChild(btn);
         this.appendChild(wrapper);
     }
+
+    setup(message, onRetry) {
+        const msgEl = this.querySelector('.error-state-message');
+        if (msgEl && message) {
+            msgEl.textContent = message;
+        }
+
+        const btn = this.querySelector('.error-state-retry');
+        if (btn) {
+            if (onRetry) {
+                btn.onclick = () => {
+                    btn.textContent = 'Reintentando...';
+                    btn.disabled = true;
+                    onRetry();
+                };
+            } else {
+                btn.style.display = 'none';
+            }
+        }
+    }
 }
 
 customElements.define('error-state', ErrorState);
