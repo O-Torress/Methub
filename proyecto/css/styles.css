@@ -1,19 +1,3 @@
-/* ============================================
-   MetHub — Museum Aesthetic Design System
-   ============================================ */
-
-/* --- Color Palette ---
-   --parchment:     #f4f0e8  (warm off-white background)
-   --mahogany:      #2c2318  (dark wood / navbar / cards)
-   --mahogany-light:#3d3028  (lighter dark cards)
-   --gold:          #b8860b  (antique gold accent)
-   --gold-light:    #d4a843  (lighter gold for hover)
-   --sienna:        #8b4513  (leather / secondary accent)
-   --ink:           #3a2f27  (dark text on light backgrounds)
-   --ivory:         #f0e6d3  (light text on dark backgrounds)
-   --cream:         #e8dcc8  (muted elements on light bg)
-*/
-
 @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Lora:ital,wght@0,400..700;1,400..700&display=swap');
 
 /* --- Reset --- */
@@ -300,7 +284,7 @@ footer {
 }
 
 .home-hero-title {
-  font-size: clamp(2rem, 3.5vw, 3.2rem);
+  font-size: 40px;
   color: #f0e6d3;
   margin-bottom: 0.8rem;
   line-height: 1.1;
