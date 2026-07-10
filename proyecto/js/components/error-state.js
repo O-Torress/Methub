@@ -31,10 +31,21 @@ class ErrorState extends HTMLElement {
 
     setup(message, onRetry) {
         const msgEl = this.querySelector('.error-state-message');
+        if (msgEl && message) {
+            msgEl.textContent = message;
+        }
+
         const btn = this.querySelector('.error-state-retry');
-        if (msgEl) msgEl.textContent = message;
-        if (onRetry) {
-            this.addEventListener('retry', onRetry);
+        if (btn) {
+            if (onRetry) {
+                btn.onclick = () => {
+                    btn.textContent = 'Reintentando...';
+                    btn.disabled = true;
+                    onRetry();
+                };
+            } else {
+                btn.style.display = 'none';
+            }
         }
     }
 }
