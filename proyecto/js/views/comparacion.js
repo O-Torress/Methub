@@ -93,7 +93,58 @@ function mostrarBuscador(panel, panelId, mainContainer) {
     panel.appendChild(searchWrapper);
 }
 
-function buscarEnPanel(query, resultsList, panelId, panel, mainContainer) {
+async function buscarEnPanel(query, resultsList, panelId, panel, mainContainer) {
+    resultsList.innerHTML = '';
+    const miniLoader = document.createElement('p');
+    miniLoader.className = 'panel-loading';
+    miniLoader.textContent = '🔍 Buscando…';
+    resultsList.appendChild(miniLoader);
+
+    try {
+        const { objectIDs } = await searchObjects({ q: query, hasImages: 'true' });
+
+        if (!objectIDs || objectIDs.length === 0) {
+            resultsList.innerHTML = '';
+            const noResult = document.createElement('p');
+            noResult.className = 'panel-no-results';
+            noResult.textContent = 'No se encontraron obras con ese término.';
+            resultsList.appendChild(noResult);
+            return;
+        }
+
+        const topIds = objectIDs.slice(0, 5);
+        const obras = await resolveIds(topIds);
+
+        resultsList.innerHTML = '';
+
+        if (obras.length === 0) {
+            const noResult = document.createElement('p');
+            noResult.className = 'panel-no-results';
+            noResult.textContent = 'No se pudieron cargar los resultados.';
+            resultsList.appendChild(noResult);
+            return;
+        }
+
+        obras.forEach(obra => {
+            const miniCard = crearMiniCard(obra, panelId, panel, mainContainer);
+            resultsList.appendChild(miniCard);
+        });
+
+    } catch (error) {
+        resultsList.innerHTML = '';
+        const errMsg = document.createElement('p');
+        errMsg.className = 'panel-error';
+        errMsg.textContent = 'Error al buscar. ';
+        const retryBtn = document.createElement('button');
+        retryBtn.textContent = 'Reintentar';
+        retryBtn.className = 'btn-retry-inline';
+        retryBtn.addEventListener('click', () => buscarEnPanel(query, resultsList, panelId, panel, mainContainer));
+        errMsg.appendChild(retryBtn);
+        resultsList.appendChild(errMsg);
+    }
+}
+
+function crearMiniCard(obra, panelId, panel, mainContainer) {
 }
 
 function precargarObra(id, panelId, panel) {
