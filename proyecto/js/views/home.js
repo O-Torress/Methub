@@ -16,7 +16,7 @@
         const hero = createElement('section', 'home-hero');
 
         const content = createElement('div', 'home-hero-content');
-        const eyebrow = createElement('p', 'home-hero-eyebrow', '');
+        const eyebrow = createElement('p', 'home-hero-eyebrow', 'DESDE 1872');
         const title = createElement('h1', 'home-hero-title', ' Museo Metropolitano de Arte');
         const description = createElement('p', 'home-hero-description', 'El Museo Metropolitano de Arte es uno de los museos de arte más destacados del mundo. Situado en el distrito de Manhattan, en la ciudad de Nueva York, abrió sus puertas el 20 de febrero de 1872 ​​​​​La colección del museo es de más de dos millones de obras de arte de todo el mundo.​');
 

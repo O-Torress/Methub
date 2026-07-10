@@ -4,6 +4,26 @@ function renderExplore(container, departmentId) {
     const layout = document.createElement('div');
     layout.className = 'explore-layout';
 
+    /* ── Search bar ── */
+    const searchBar = document.createElement('div');
+    searchBar.className = 'explore-search-bar';
+
+    const searchInput = document.createElement('input');
+    searchInput.type = 'text';
+    searchInput.className = 'explore-search-input';
+    searchInput.placeholder = 'Buscar obras por nombre, artista, tema…';
+    searchInput.id = 'explore-search-input';
+
+    const searchBtn = document.createElement('button');
+    searchBtn.className = 'explore-search-btn';
+    searchBtn.textContent = 'Buscar';
+    searchBtn.id = 'explore-search-btn';
+
+    searchBar.appendChild(searchInput);
+    searchBar.appendChild(searchBtn);
+    layout.appendChild(searchBar);
+
+    /* ── Gallery containers ── */
     const galleriesContainer = document.createElement('div');
     galleriesContainer.className = 'explore-content';
 
@@ -23,7 +43,36 @@ function renderExplore(container, departmentId) {
     let allIds = [];
     let currentObjects = [];
     let isLoading = false;
+    let currentQuery = departmentId ? '' : 'art';
 
+    /* ── If coming from a department, set label ── */
+    if (departmentId) {
+        searchInput.placeholder = 'Buscando obras del departamento…';
+    }
+
+    /* ── Search button click ── */
+    searchBtn.addEventListener('click', function () {
+        const q = searchInput.value.trim();
+        if (!q) return;
+        currentQuery = q;
+        currentPage = 1;
+        allIds = [];
+        performSearch();
+    });
+
+    /* ── Enter key ── */
+    searchInput.addEventListener('keydown', function (e) {
+        if (e.key === 'Enter') {
+            const q = searchInput.value.trim();
+            if (!q) return;
+            currentQuery = q;
+            currentPage = 1;
+            allIds = [];
+            performSearch();
+        }
+    });
+
+    /* ── Initial load ── */
     performSearch();
 
     async function performSearch() {
@@ -38,11 +87,12 @@ function renderExplore(container, departmentId) {
         galleryContainer.appendChild(loading);
 
         try {
-            let params = { q: 'painting' };
+            let params = { q: currentQuery || 'art', hasImages: 'true' };
             if (departmentId) {
                 params.departmentId = departmentId;
-                params.q = 'painting';
+                if (!currentQuery) params.q = 'art';
             }
+
             let result = await searchObjects(params);
             allIds = result.objectIDs;
             totalResults = result.total;
@@ -52,7 +102,7 @@ function renderExplore(container, departmentId) {
             if (totalResults === 0 || allIds.length === 0) {
                 let noResults = document.createElement('p');
                 noResults.className = 'no-results';
-                noResults.textContent = 'No se encontraron obras.';
+                noResults.textContent = 'No se encontraron obras para "' + (currentQuery || 'art') + '".';
                 galleryContainer.appendChild(noResults);
                 updatePagination(paginationEl, 0, 0);
                 isLoading = false;
@@ -106,10 +156,11 @@ function renderGallery(container, objects, requestedCount) {
     const grid = document.createElement('div');
     grid.className = 'explore-grid';
 
-    objects.forEach(function (obj) {
+    objects.forEach(function (obj, index) {
         const card = document.createElement('article');
         card.className = 'explore-card';
         card.dataset.id = obj.objectID;
+        card.style.animationDelay = `${index * 0.05}s`;
 
         const imgContainer = document.createElement('div');
         imgContainer.className = 'explore-card-img';
@@ -173,7 +224,7 @@ function updatePagination(container, totalPages, currentPage) {
 
     const prevBtn = document.createElement('button');
     prevBtn.className = 'pagination-btn';
-    prevBtn.textContent = 'Anterior';
+    prevBtn.textContent = '← Anterior';
     prevBtn.disabled = currentPage <= 1;
     prevBtn.addEventListener('click', function () {
         window.goToPage(currentPage - 1);
@@ -182,12 +233,12 @@ function updatePagination(container, totalPages, currentPage) {
 
     const pageInfo = document.createElement('span');
     pageInfo.className = 'pagination-info';
-    pageInfo.textContent = currentPage + ' / ' + totalPages;
+    pageInfo.textContent = 'Página ' + currentPage + ' de ' + totalPages;
     container.appendChild(pageInfo);
 
     const nextBtn = document.createElement('button');
     nextBtn.className = 'pagination-btn';
-    nextBtn.textContent = 'Siguiente';
+    nextBtn.textContent = 'Siguiente →';
     nextBtn.disabled = currentPage >= totalPages;
     nextBtn.addEventListener('click', function () {
         window.goToPage(currentPage + 1);

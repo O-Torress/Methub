@@ -97,7 +97,7 @@ async function buscarEnPanel(query, resultsList, panelId, panel, mainContainer) 
     resultsList.innerHTML = '';
     const miniLoader = document.createElement('p');
     miniLoader.className = 'panel-loading';
-    miniLoader.textContent = '🔍 Buscando…';
+    miniLoader.textContent = 'Buscando obras…';
     resultsList.appendChild(miniLoader);
 
     try {
@@ -237,9 +237,24 @@ function mostrarObraEnPanel(obra, panelId, panel, mainContainer) {
     date.className = 'panel-selected-meta';
     date.textContent = obra.objectDate || '—';
 
+    /* ── Description / Medium ── */
+    const description = document.createElement('p');
+    description.className = 'panel-selected-description';
+    const descParts = [];
+    if (obra.medium) descParts.push(obra.medium);
+    if (obra.department) descParts.push(obra.department);
+    if (obra.classification) descParts.push(obra.classification);
+    if (obra.culture) descParts.push(obra.culture);
+    description.textContent = descParts.join(' · ') || 'Sin descripción disponible';
+
+    info.appendChild(title);
+    info.appendChild(artist);
+    info.appendChild(date);
+    info.appendChild(description);
+
     const changeBtn = document.createElement('button');
     changeBtn.className = 'btn-change-selection';
-    changeBtn.textContent = '🔄 Cambiar selección';
+    changeBtn.textContent = '↻ Cambiar selección';
     changeBtn.addEventListener('click', () => {
         if (panelId === 'A') compareState.panelA = null;
         else compareState.panelB = null;
@@ -249,10 +264,6 @@ function mostrarObraEnPanel(obra, panelId, panel, mainContainer) {
 
         mostrarBuscador(panel, panelId, mainContainer);
     });
-
-    info.appendChild(title);
-    info.appendChild(artist);
-    info.appendChild(date);
 
     selectedWrapper.appendChild(img);
     selectedWrapper.appendChild(info);
@@ -291,12 +302,14 @@ function mostrarTablaComparativa(container) {
     table.appendChild(thead);
 
     const campos = [
+        { label: 'Título',           keyA: obraA.title,             keyB: obraB.title },
         { label: 'Artista',          keyA: obraA.artistDisplayName, keyB: obraB.artistDisplayName },
         { label: 'Año',              keyA: obraA.objectEndDate || obraA.objectBeginDate || null, keyB: obraB.objectEndDate || obraB.objectBeginDate || null },
         { label: 'Departamento',     keyA: obraA.department,        keyB: obraB.department },
         { label: 'Técnica',          keyA: obraA.medium,            keyB: obraB.medium },
         { label: 'Clasificación',    keyA: obraA.classification,    keyB: obraB.classification },
         { label: 'Cultura',          keyA: obraA.culture,           keyB: obraB.culture },
+        { label: 'Dimensiones',      keyA: obraA.dimensions,        keyB: obraB.dimensions },
         { label: '¿Obra destacada?', keyA: obraA.isHighlight ? 'Sí' : 'No', keyB: obraB.isHighlight ? 'Sí' : 'No' },
         { label: '¿Dominio público?',keyA: obraA.isPublicDomain ? 'Sí' : 'No', keyB: obraB.isPublicDomain ? 'Sí' : 'No' }
     ];
@@ -349,6 +362,9 @@ function mostrarTablaComparativa(container) {
         diffSection.textContent = `Diferencia entre obras: ${diff} año${diff !== 1 ? 's' : ''}`;
         tableSection.appendChild(diffSection);
     }
+
+    /* Scroll to table */
+    tableSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
 }
 
 async function precargarObra(id, panelId, panel) {
@@ -358,7 +374,7 @@ async function precargarObra(id, panelId, panel) {
 
     const loader = document.createElement('p');
     loader.className = 'panel-loading';
-    loader.textContent = '⏳ Cargando obra…';
+    loader.textContent = 'Cargando obra…';
     panel.appendChild(loader);
 
     try {

@@ -41,7 +41,7 @@ async function renderArtist(container, artistName) {
     container.appendChild(loader);
 
     try {
-        const { objectIDs } = await searchObjects({ artistOrCulture: 'true', q: artistName });
+        const { objectIDs } = await searchObjects({ artistOrCulture: 'true', q: artistName, hasImages: 'true' });
 
         if (!objectIDs || objectIDs.length === 0) {
             loader.remove();
