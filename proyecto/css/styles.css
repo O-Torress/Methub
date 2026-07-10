@@ -342,11 +342,10 @@ footer {
     background: transparent;
     color: #c9a227;
     border: 1px solid #c9a227;
-    padding: 0.5rem 1.2rem;
+    padding: 0.5rem 1rem;
     border-radius: 6px;
     cursor: pointer;
-    font-size: 0.9rem;
-    margin: 2rem;
+    margin: 2rem 2rem 0;
     transition: background 0.2s, color 0.2s;
 }
 .btn-back:hover {
@@ -355,7 +354,7 @@ footer {
 }
 .artist-header {
     text-align: center;
-    padding: 0 2rem 2rem;
+    padding: 1.5rem 2rem;
     max-width: 800px;
     margin: 0 auto;
 }
@@ -365,31 +364,31 @@ footer {
     margin-bottom: 0.5rem;
 }
 .artist-bio {
-    font-size: 1.1rem;
     color: #aaa;
-    line-height: 1.6;
+    font-size: 1.05rem;
+    line-height: 1.5;
 }
 .artist-gallery {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
     gap: 2rem;
-    padding: 2rem;
+    padding: 1.5rem 2rem;
     max-width: 1200px;
     margin: 0 auto;
 }
 .artist-no-data {
     text-align: center;
     color: #888;
-    font-size: 1.2rem;
-    padding: 4rem;
+    padding: 3rem;
 }
+
 .artwork-card {
     background: #16213e;
     border: 1px solid #2a2a4e;
     border-radius: 12px;
     overflow: hidden;
     cursor: pointer;
-    transition: transform 0.2s, border-color 0.2s, box-shadow 0.2s;
+    transition: transform 0.3s, border-color 0.3s, box-shadow 0.3s;
     display: flex;
     flex-direction: column;
 }
@@ -431,15 +430,16 @@ footer {
 .card-title {
     font-size: 0.95rem;
     color: #e0e0e0;
+    margin-bottom: 0.3rem;
     display: -webkit-box;
     -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
     overflow: hidden;
-    margin-bottom: 0.2rem;
 }
 .card-artist {
     font-size: 0.85rem;
     color: #c9a227;
+    margin-bottom: 0.3rem;
 }
 .card-meta {
     font-size: 0.8rem;
@@ -447,21 +447,21 @@ footer {
     margin-bottom: 0.5rem;
 }
 .btn-compare-card {
-    background: #10172a;
-    color: #c9a227;
-    border: 1px solid #c9a227;
+    background: transparent;
+    border: 1px solid #444;
+    color: #aaa;
     padding: 0.4rem;
     border-radius: 6px;
     cursor: pointer;
     font-size: 0.8rem;
-    font-weight: 600;
-    transition: background 0.2s, color 0.2s;
+    transition: all 0.2s;
     margin-top: auto;
 }
 .btn-compare-card:hover {
-    background: #c9a227;
-    color: #10172a;
+    border-color: #c9a227;
+    color: #c9a227;
 }
+
 .pagination-controls {
     display: flex;
     align-items: center;
