@@ -145,6 +145,56 @@ async function buscarEnPanel(query, resultsList, panelId, panel, mainContainer) 
 }
 
 function crearMiniCard(obra, panelId, panel, mainContainer) {
+    const card = document.createElement('div');
+    card.className = 'mini-card';
+
+    const otraObra = panelId === 'A' ? compareState.panelB : compareState.panelA;
+    const yaSeleccionada = otraObra && otraObra.objectID === obra.objectID;
+
+    if (yaSeleccionada) {
+        card.classList.add('mini-card--disabled');
+        card.title = 'Ya está seleccionada en el otro panel';
+    }
+
+    const img = document.createElement('img');
+    img.className = 'mini-card-img';
+    img.src = obra.primaryImageSmall || '';
+    img.alt = obra.title || 'Sin título';
+    img.onerror = () => { img.style.display = 'none'; };
+
+    const info = document.createElement('div');
+    info.className = 'mini-card-info';
+
+    const title = document.createElement('span');
+    title.className = 'mini-card-title';
+    title.textContent = obra.title || 'Sin título';
+
+    const artist = document.createElement('span');
+    artist.className = 'mini-card-artist';
+    artist.textContent = obra.artistDisplayName || 'Artista desconocido';
+
+    if (yaSeleccionada) {
+        const tag = document.createElement('span');
+        tag.className = 'mini-card-tag';
+        tag.textContent = 'Ya seleccionada en otro panel';
+        info.appendChild(tag);
+    }
+
+    info.appendChild(title);
+    info.appendChild(artist);
+    card.appendChild(img);
+    card.appendChild(info);
+
+    if (!yaSeleccionada) {
+        card.addEventListener('click', () => {
+            seleccionarObra(obra, panelId, panel, mainContainer);
+        });
+    }
+
+    return card;
+}
+
+function seleccionarObra(obra, panelId, panel, mainContainer) {
 }
 
 function precargarObra(id, panelId, panel) {
