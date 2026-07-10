@@ -55,3 +55,62 @@ async function renderArtist(container, artistName) {
         errorEl.setup('Error al buscar obras del artista.', () => renderArtist(container, artistName));
     }
 }
+
+function crearArtworkCard(obra) {
+    const card = document.createElement('div');
+    card.className = 'artwork-card';
+
+    const imgWrapper = document.createElement('div');
+    imgWrapper.className = 'card-img-wrapper';
+
+    if (obra.primaryImageSmall) {
+        const img = document.createElement('img');
+        img.className = 'card-img';
+        img.src = obra.primaryImageSmall;
+        img.alt = obra.title || 'Obra del Met';
+        img.loading = 'lazy';
+        imgWrapper.appendChild(img);
+    } else {
+        const noImg = document.createElement('div');
+        noImg.className = 'card-no-img';
+        noImg.textContent = 'Sin imagen disponible';
+        imgWrapper.appendChild(noImg);
+    }
+
+    const info = document.createElement('div');
+    info.className = 'card-info';
+
+    const title = document.createElement('h3');
+    title.className = 'card-title';
+    title.textContent = obra.title || 'Sin título';
+
+    const artist = document.createElement('p');
+    artist.className = 'card-artist';
+    artist.textContent = obra.artistDisplayName || 'Artista desconocido';
+
+    const meta = document.createElement('p');
+    meta.className = 'card-meta';
+    meta.textContent = `${obra.objectDate || 'Fecha desconocida'} | ${obra.medium || 'Técnica no especificada'}`;
+
+    const compareBtn = document.createElement('button');
+    compareBtn.className = 'btn-compare-card';
+    compareBtn.textContent = '📊 Comparar';
+    compareBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        window.location.hash = `#compare/${obra.objectID}`;
+    });
+
+    info.appendChild(title);
+    info.appendChild(artist);
+    info.appendChild(meta);
+    info.appendChild(compareBtn);
+
+    card.appendChild(imgWrapper);
+    card.appendChild(info);
+
+    card.addEventListener('click', () => {
+        window.location.hash = `#detail/${obra.objectID}`;
+    });
+
+    return card;
+}
