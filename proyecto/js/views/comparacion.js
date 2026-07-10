@@ -39,7 +39,61 @@ function crearPanel(panelId, mainContainer) {
     const panel = document.createElement('div');
     panel.className = 'compare-panel';
     panel.id = `panel-${panelId}`;
+
+    const label = document.createElement('div');
+    label.className = 'panel-label';
+    label.textContent = `Obra ${panelId}`;
+    panel.appendChild(label);
+
+    mostrarBuscador(panel, panelId, mainContainer);
+
     return panel;
+}
+
+function mostrarBuscador(panel, panelId, mainContainer) {
+    const label = panel.querySelector('.panel-label');
+    panel.innerHTML = '';
+    panel.appendChild(label);
+
+    const searchWrapper = document.createElement('div');
+    searchWrapper.className = 'panel-search-wrapper';
+
+    const input = document.createElement('input');
+    input.type = 'text';
+    input.className = 'panel-search-input';
+    input.placeholder = 'Busca una obra por nombre, artista, tema…';
+    input.id = `search-input-${panelId}`;
+
+    const resultsList = document.createElement('div');
+    resultsList.className = 'panel-results';
+    resultsList.id = `results-${panelId}`;
+
+    const hint = document.createElement('p');
+    hint.className = 'panel-hint';
+    hint.textContent = 'Busca y elige una obra para comparar';
+    resultsList.appendChild(hint);
+
+    input.addEventListener('input', () => {
+        clearTimeout(debounceTimers[panelId]);
+        const query = input.value.trim();
+
+        if (!query) {
+            resultsList.innerHTML = '';
+            resultsList.appendChild(hint);
+            return;
+        }
+
+        debounceTimers[panelId] = setTimeout(() => {
+            buscarEnPanel(query, resultsList, panelId, panel, mainContainer);
+        }, 400);
+    });
+
+    searchWrapper.appendChild(input);
+    searchWrapper.appendChild(resultsList);
+    panel.appendChild(searchWrapper);
+}
+
+function buscarEnPanel(query, resultsList, panelId, panel, mainContainer) {
 }
 
 function precargarObra(id, panelId, panel) {
