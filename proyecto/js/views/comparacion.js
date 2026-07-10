@@ -351,5 +351,24 @@ function mostrarTablaComparativa(container) {
     }
 }
 
-function precargarObra(id, panelId, panel) {
+async function precargarObra(id, panelId, panel) {
+    const label = panel.querySelector('.panel-label');
+    panel.innerHTML = '';
+    panel.appendChild(label);
+
+    const loader = document.createElement('p');
+    loader.className = 'panel-loading';
+    loader.textContent = '⏳ Cargando obra…';
+    panel.appendChild(loader);
+
+    try {
+        const obra = await getObject(id);
+        seleccionarObra(obra, panelId, panel, panel.closest('#view-container') || document.getElementById('view-container'));
+    } catch (error) {
+        panel.innerHTML = '';
+        panel.appendChild(label);
+        const errEl = document.createElement('error-state');
+        panel.appendChild(errEl);
+        errEl.setup('No se pudo cargar la obra preseleccionada.', () => precargarObra(id, panelId, panel));
+    }
 }
