@@ -368,7 +368,10 @@ async function precargarObra(id, panelId, panel) {
         panel.innerHTML = '';
         panel.appendChild(label);
         const errEl = document.createElement('error-state');
+        errEl.setAttribute('message', 'No se pudo cargar la obra preseleccionada.');
+        errEl.addEventListener('retry', function () {
+            precargarObra(id, panelId, panel);
+        });
         panel.appendChild(errEl);
-        errEl.setup('No se pudo cargar la obra preseleccionada.', () => precargarObra(id, panelId, panel));
     }
 }

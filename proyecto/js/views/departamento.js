@@ -55,7 +55,7 @@ async function renderDepartments(container, param) {
             card.appendChild(name);
 
             card.addEventListener('click', () => {
-                window.location.hash = `#explore/${dept.departmentId}`;
+                window.location.hash = '#explorar/' + dept.departmentId;
             });
 
             grid.appendChild(card);
@@ -65,7 +65,10 @@ async function renderDepartments(container, param) {
     } catch (error) {
         loader.remove();
         const errorEl = document.createElement('error-state');
+        errorEl.setAttribute('message', 'No se pudieron cargar los departamentos.');
+        errorEl.addEventListener('retry', function () {
+            renderDepartments(container, param);
+        });
         container.appendChild(errorEl);
-        errorEl.setup('No se pudieron cargar los departamentos.', () => renderDepartments(container, param));
     }
 }

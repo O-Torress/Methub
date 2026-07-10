@@ -4,10 +4,11 @@ async function renderArtist(container, artistName) {
     if (!artistName) {
         container.innerHTML = '';
         const errorEl = document.createElement('error-state');
-        container.appendChild(errorEl);
-        errorEl.setup('No se especificó un artista para mostrar.', () => {
+        errorEl.setAttribute('message', 'No se especificó un artista para mostrar.');
+        errorEl.addEventListener('retry', function () {
             window.location.hash = '#home';
         });
+        container.appendChild(errorEl);
         return;
     }
 
@@ -103,8 +104,11 @@ async function renderArtist(container, artistName) {
             } catch (error) {
                 miniLoader.remove();
                 const errorEl = document.createElement('error-state');
+                errorEl.setAttribute('message', 'Error al cargar la página de obras.');
+                errorEl.addEventListener('retry', function () {
+                    loadPage(page);
+                });
                 gallery.appendChild(errorEl);
-                errorEl.setup('Error al cargar la página de obras.', () => loadPage(page));
             }
         }
 
@@ -112,8 +116,11 @@ async function renderArtist(container, artistName) {
     } catch (error) {
         loader.remove();
         const errorEl = document.createElement('error-state');
+        errorEl.setAttribute('message', 'Error al buscar obras del artista.');
+        errorEl.addEventListener('retry', function () {
+            renderArtist(container, artistName);
+        });
         container.appendChild(errorEl);
-        errorEl.setup('Error al buscar obras del artista.', () => renderArtist(container, artistName));
     }
 }
 
@@ -156,9 +163,9 @@ function crearArtworkCard(obra) {
     const compareBtn = document.createElement('button');
     compareBtn.className = 'btn-compare-card';
     compareBtn.textContent = '📊 Comparar';
-    compareBtn.addEventListener('click', (e) => {
+    compareBtn.addEventListener('click', function (e) {
         e.stopPropagation();
-        window.location.hash = `#compare/${obra.objectID}`;
+        window.location.hash = '#comparar/' + obra.objectID;
     });
 
     info.appendChild(title);
@@ -169,8 +176,8 @@ function crearArtworkCard(obra) {
     card.appendChild(imgWrapper);
     card.appendChild(info);
 
-    card.addEventListener('click', () => {
-        window.location.hash = `#detail/${obra.objectID}`;
+    card.addEventListener('click', function () {
+        window.location.hash = '#detalle/' + obra.objectID;
     });
 
     return card;
