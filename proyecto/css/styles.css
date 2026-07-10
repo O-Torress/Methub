@@ -304,6 +304,233 @@ footer {
     }
 }
 
+.home-page {
+    padding: 2rem 1.5rem 3rem;
+    color: #1a1a2e;
+    background: #f5f5dc;
+    min-height: 100%;
+}
+
+.home-hero {
+    display: grid;
+    grid-template-columns: 1.1fr 0.9fr;
+    gap: 2.0rem;
+    align-items: center;
+    padding: 1.5rem;
+    background: #1a1a2e;
+    border: 1px solid rgba(201,162,39,0.22);
+    border-radius: 24px;
+    box-shadow: 0 16px 45px rgba(0,0,0,0.18);
+    margin-bottom: 2rem;
+}
+
+.home-hero-eyebrow {
+    color: red;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    font-size: 0.8rem;
+    margin-bottom: 0.8rem;
+    font-weight: 700;
+}
+
+.home-hero-title {
+    font-size: clamp(2rem, 3.5vw, 3.2rem);
+    color: #fff;
+    margin-bottom: 0.8rem;
+    line-height: 1.1;
+}
+
+.home-hero-description {
+    color: #d9d9d9;
+    font-size: 1rem;
+    line-height: 1.7;
+    margin-bottom: 1.2rem;
+    max-width: 620px;
+}
+
+.home-hero-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.8rem;
+}
+
+.home-btn {
+    border: none;
+    border-radius: 999px;
+    padding: 0.8rem 1.2rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.home-btn:hover {
+    transform: translateY(-2px);
+}
+
+.home-btn--primary {
+    background: red;
+    color: #1a1a2e;
+}
+
+.home-btn--secondary {
+    background: transparent;
+    color: #fff;
+    border: 1px solid rgba(255,255,255,0.2);
+}
+
+.home-hero-image-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.home-hero-image {
+    width: 100%;
+    max-width: 420px;
+    height: 280px;
+    object-fit: cover;
+    border-radius: 20px;
+    border: 2px solid rgba(201, 162, 39, 0.3);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+}
+
+.home-section {
+    margin-bottom: 2rem;
+}
+
+.home-section-heading {
+    margin-bottom: 1rem;
+}
+
+.home-section-title {
+    color: #fff;
+    font-size: 1.5rem;
+    margin-bottom: 0.3rem;
+}
+
+.home-section-description {
+    color: #bdbdbd;
+}
+
+.home-stats-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 1rem;
+}
+
+.home-stat-card {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 16px;
+    padding: 1.2rem;
+}
+
+.home-stat-value {
+    color: #c9a227;
+    font-size: 1.6rem;
+    font-weight: 700;
+    margin-bottom: 0.35rem;
+}
+
+.home-stat-label {
+    color: #e8e8e8;
+    font-size: 0.95rem;
+}
+
+.home-gallery {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 1rem;
+}
+
+.home-card {
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 16px;
+    overflow: hidden;
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.home-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 10px 28px rgba(0,0,0,0.24);
+}
+
+.home-card-image {
+    width: 100%;
+    aspect-ratio: 4 / 5;
+    background: #f5f5dc;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+
+.home-card-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.home-card-placeholder {
+    color: #8a8a8a;
+    text-align: center;
+    padding: 1rem;
+}
+
+.home-card-info {
+    padding: 0.9rem;
+}
+
+.home-card-title {
+    color: #fff;
+    font-size: 1rem;
+    margin-bottom: 0.35rem;
+}
+
+.home-card-artist {
+    color: #c9a227;
+    font-size: 0.9rem;
+    margin-bottom: 0.25rem;
+}
+
+.home-card-meta {
+    color: #c9c9c9;
+    font-size: 0.8rem;
+    line-height: 1.4;
+}
+
+.home-empty-state {
+    color: #ddd;
+    padding: 1rem 0;
+}
+
+@media (max-width: 900px) {
+    .home-hero {
+        grid-template-columns: 1fr;
+    }
+
+    .home-gallery {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+@media (max-width: 640px) {
+    .home-page {
+        padding: 1rem 1rem 2rem;
+    }
+
+    .home-stats-grid,
+    .home-gallery {
+        grid-template-columns: 1fr;
+    }
+
+    .home-hero {
+        padding: 1.2rem;
+    }
+}
+
 .departments-title {
     text-align: center;
     color: #c9a227;
