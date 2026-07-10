@@ -38,6 +38,24 @@ async function renderDepartments(container, param) {
 
         const grid = document.createElement('div');
         grid.className = 'departments-grid';
+
+        departments.forEach(dept => {
+            const card = document.createElement('div');
+            card.className = 'department-card';
+
+            const icon = document.createElement('span');
+            icon.className = 'department-icon';
+            icon.textContent = DEPT_ICONS[dept.departmentId] || '🏛️';
+
+            const name = document.createElement('span');
+            name.className = 'department-name';
+            name.textContent = dept.displayName;
+
+            card.appendChild(icon);
+            card.appendChild(name);
+            grid.appendChild(card);
+        });
+
         container.appendChild(grid);
     } catch (error) {
         loader.remove();
