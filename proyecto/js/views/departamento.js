@@ -53,6 +53,11 @@ async function renderDepartments(container, param) {
 
             card.appendChild(icon);
             card.appendChild(name);
+
+            card.addEventListener('click', () => {
+                window.location.hash = `#explore/${dept.departmentId}`;
+            });
+
             grid.appendChild(card);
         });
 
