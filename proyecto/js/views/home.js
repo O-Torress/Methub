@@ -12,61 +12,6 @@
         return element;
     }
 
-    function createStatCard(label, value) {
-        const card = createElement('div', 'home-stat-card');
-        const valueEl = createElement('div', 'home-stat-value', value);
-        const labelEl = createElement('div', 'home-stat-label', label);
-        card.appendChild(valueEl);
-        card.appendChild(labelEl);
-        return card;
-    }
-
-    function createArtworkCard(artwork) {
-        const card = createElement('article', 'home-card');
-        card.tabIndex = 0;
-
-        const imageWrapper = createElement('div', 'home-card-image');
-        const image = createElement('img');
-        image.alt = artwork.title || 'Obra del museo';
-
-        if (artwork.primaryImageSmall || artwork.primaryImage) {
-            image.src = artwork.primaryImageSmall || artwork.primaryImage;
-        } else {
-            const placeholder = createElement('div', 'home-card-placeholder', 'Sin imagen disponible');
-            imageWrapper.appendChild(placeholder);
-        }
-
-        if (image.src) {
-            imageWrapper.appendChild(image);
-        }
-
-        const info = createElement('div', 'home-card-info');
-        const title = createElement('h3', 'home-card-title', artwork.title || 'Obra sin título');
-        const artist = createElement('p', 'home-card-artist', artwork.artistDisplayName || 'Artista desconocido');
-        const meta = createElement('p', 'home-card-meta', `${artwork.objectDate || 'Fecha desconocida'} · ${artwork.department || 'Departamento desconocido'}`);
-
-        info.appendChild(title);
-        info.appendChild(artist);
-        info.appendChild(meta);
-
-        card.appendChild(imageWrapper);
-        card.appendChild(info);
-
-        const goToDetail = () => {
-            window.location.hash = `#detalle/${artwork.objectID}`;
-        };
-
-        card.addEventListener('click', goToDetail);
-        card.addEventListener('keydown', (event) => {
-            if (event.key === 'Enter' || event.key === ' ') {
-                event.preventDefault();
-                goToDetail();
-            }
-        });
-
-        return card;
-    }
-
     function createHero() {
         const hero = createElement('section', 'home-hero');
 
