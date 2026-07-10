@@ -195,6 +195,72 @@ function crearMiniCard(obra, panelId, panel, mainContainer) {
 }
 
 function seleccionarObra(obra, panelId, panel, mainContainer) {
+    if (panelId === 'A') {
+        compareState.panelA = obra;
+    } else {
+        compareState.panelB = obra;
+    }
+
+    mostrarObraEnPanel(obra, panelId, panel, mainContainer);
+
+    if (compareState.panelA && compareState.panelB) {
+        mostrarTablaComparativa(mainContainer);
+    }
+}
+
+function mostrarObraEnPanel(obra, panelId, panel, mainContainer) {
+    const label = panel.querySelector('.panel-label');
+    panel.innerHTML = '';
+    panel.appendChild(label);
+
+    const selectedWrapper = document.createElement('div');
+    selectedWrapper.className = 'panel-selected';
+
+    const img = document.createElement('img');
+    img.className = 'panel-selected-img';
+    img.src = obra.primaryImageSmall || '';
+    img.alt = obra.title || 'Sin título';
+    img.onerror = () => { img.style.display = 'none'; };
+
+    const info = document.createElement('div');
+    info.className = 'panel-selected-info';
+
+    const title = document.createElement('h3');
+    title.className = 'panel-selected-title';
+    title.textContent = obra.title || 'Sin título';
+
+    const artist = document.createElement('p');
+    artist.className = 'panel-selected-artist';
+    artist.textContent = obra.artistDisplayName || 'Artista desconocido';
+
+    const date = document.createElement('p');
+    date.className = 'panel-selected-meta';
+    date.textContent = obra.objectDate || '—';
+
+    const changeBtn = document.createElement('button');
+    changeBtn.className = 'btn-change-selection';
+    changeBtn.textContent = '🔄 Cambiar selección';
+    changeBtn.addEventListener('click', () => {
+        if (panelId === 'A') compareState.panelA = null;
+        else compareState.panelB = null;
+
+        const tableSection = document.getElementById('compare-table-section');
+        if (tableSection) tableSection.style.display = 'none';
+
+        mostrarBuscador(panel, panelId, mainContainer);
+    });
+
+    info.appendChild(title);
+    info.appendChild(artist);
+    info.appendChild(date);
+
+    selectedWrapper.appendChild(img);
+    selectedWrapper.appendChild(info);
+    panel.appendChild(selectedWrapper);
+    panel.appendChild(changeBtn);
+}
+
+function mostrarTablaComparativa(container) {
 }
 
 function precargarObra(id, panelId, panel) {
